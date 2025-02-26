@@ -1,0 +1,61 @@
+# Netlify configuration file
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "functions"
+
+# Environment variables
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_VERSION = "10"
+
+# Headers for security and caching
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self' https://warmr.space https://*.supabase.co; script-src 'self' 'unsafe-inline' https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co https://www.google-analytics.com;"
+
+# Enable Brotli and Gzip compression
+[build.processing]
+  skip_processing = false
+[build.processing.css]
+  bundle = true
+  minify = true
+[build.processing.js]
+  bundle = true
+  minify = true
+[build.processing.html]
+  pretty_urls = true
+[build.processing.images]
+  compress = true
+
+# Redirect www to non-www
+[[redirects]]
+  from = "https://www.warmr.space/*"
+  to = "https://warmr.space/:splat"
+  status = 301
+  force = true
+
+# Redirect old domain to new domain
+[[redirects]]
+  from = "https://warmr.netlify.app/*"
+  to = "https://warmr.space/:splat"
+  status = 301
+  force = true
+
+# SPA fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Custom 404 page
+[[redirects]]
+  from = "/*"
+  to = "/404/index.html"
+  status = 404

@@ -1,0 +1,25 @@
+# DNS Configuration Guide for warmr.space
+
+# A Records
+warmr.space.                   A     104.198.14.52    # Netlify's IP
+www.warmr.space.              A     104.198.14.52    # Netlify's IP
+
+# CNAME Records
+www.warmr.space.              CNAME warmr.netlify.app.
+
+# TXT Records
+warmr.space.                   TXT   "v=spf1 include:spf.google.com ~all"
+_dmarc.warmr.space.           TXT   "v=DMARC1; p=reject; rua=mailto:dmarc@warmr.space"
+
+# MX Records
+warmr.space.                   MX    1 aspmx.l.google.com.
+warmr.space.                   MX    5 alt1.aspmx.l.google.com.
+warmr.space.                   MX    5 alt2.aspmx.l.google.com.
+
+# CAA Records
+warmr.space.                   CAA   0 issue "letsencrypt.org"
+warmr.space.                   CAA   0 issuewild "letsencrypt.org"
+
+# Security Headers (to be configured in your DNS provider's interface)
+# DNSSEC: Enabled
+# HSTS Preload: Submitted
